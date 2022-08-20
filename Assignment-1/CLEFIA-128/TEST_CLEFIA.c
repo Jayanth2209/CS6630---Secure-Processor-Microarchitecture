@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <CLEFIA.h>
+//#include "TTable.h"
+#include "CLEFIA.h"
 
 void BytePut(const unsigned char *data, int bytelen)
 {

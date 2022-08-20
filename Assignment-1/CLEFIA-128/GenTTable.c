@@ -183,56 +183,56 @@ int main()
     
     fprintf(fp, "\n");
 
-    fprintf(fp, "const unsigned char TTB00[256] = {");
+    fprintf(fp, "const unsigned int TTB00[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB0[i]);
     }
     fprintf(fp, "%s", TTB0[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB01[256] = {");
+    fprintf(fp, "const unsigned int TTB01[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB1[i]);
     }
     fprintf(fp, "%s", TTB1[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB02[256] = {");
+    fprintf(fp, "const unsigned int TTB02[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB2[i]);
     }
     fprintf(fp, "%s", TTB2[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB03[256] = {");
+    fprintf(fp, "const unsigned int TTB03[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB3[i]);
     }
     fprintf(fp, "%s", TTB3[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB10[256] = {");
+    fprintf(fp, "const unsigned int TTB10[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB4[i]);
     }
     fprintf(fp, "%s", TTB4[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB11[256] = {");
+    fprintf(fp, "const unsigned int TTB11[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB5[i]);
     }
     fprintf(fp, "%s", TTB5[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB12[256] = {");
+    fprintf(fp, "const unsigned int TTB12[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB6[i]);
     }
     fprintf(fp, "%s", TTB6[255]);
     fprintf(fp, "};\n");
-    fprintf(fp, "const unsigned char TTB13[256] = {");
+    fprintf(fp, "const unsigned int TTB13[256] = {");
     for (int i = 0; i < 255; i++)
     {
         fprintf(fp, "%s, ", TTB7[i]);
