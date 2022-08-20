@@ -35,18 +35,18 @@ void ByteXor(unsigned char *dst, const unsigned char *a, const unsigned char *b,
 
 void ClefiaF0Xor(unsigned char *dst, const unsigned char *src, const unsigned char *rk)
 {
-  unsigned char x[4], y[4], z[4];
-  unsigned int yy;
+  unsigned char x[4], y[4];
+  unsigned char YT;
   /* F0 */
   /* Key addition */
   ByteXor(x, src, rk, 4);
  
-  yy = T00[x[0]] ^ T01[x[1]] ^ T02[x[2]] ^ T03[x[3]];
+  YT = TTB00[x[0]] ^ TTB01[x[1]] ^ TTB02[x[2]] ^ TTB03[x[3]];
 
-  y[0] = (yy&0xff000000)>>24;
-  y[1] = (yy&0x00ff0000)>>16;
-  y[2] = (yy&0x0000ff00)>>8;
-  y[3] = yy&0x000000ff;
+  y[0] = (YT&0xff000000)>>24;
+  y[1] = (YT&0x00ff0000)>>16;
+  y[2] = (YT&0x0000ff00)>>8;
+  y[3] = YT&0x000000ff;
 
   /* Xoring after F0 */
   ByteCpy(dst + 0, src + 0, 4);
@@ -55,18 +55,18 @@ void ClefiaF0Xor(unsigned char *dst, const unsigned char *src, const unsigned ch
 
 void ClefiaF1Xor(unsigned char *dst, const unsigned char *src, const unsigned char *rk)
 {
-  unsigned char x[4], y[4], z[4];
-  unsigned int yy;
+  unsigned char x[4], y[4];
+  unsigned int YT;
   /* F1 */
   /* Key addition */
   ByteXor(x, src, rk, 4);
   
-  yy = T10[x[0]] ^ T11[x[1]] ^ T12[x[2]] ^ T13[x[3]];
+  YT = TTB10[x[0]] ^ TTB11[x[1]] ^ TTB12[x[2]] ^ TTB13[x[3]];
 
-  y[0] = (yy&0xff000000)>>24;
-  y[1] = (yy&0x00ff0000)>>16;
-  y[2] = (yy&0x0000ff00)>>8;
-  y[3] = yy&0x000000ff;
+  y[0] = (YT&0xff000000)>>24;
+  y[1] = (YT&0x00ff0000)>>16;
+  y[2] = (YT&0x0000ff00)>>8;
+  y[3] = YT&0x000000ff;
 
   /* Xoring after F1 */
   ByteCpy(dst + 0, src + 0, 4);
