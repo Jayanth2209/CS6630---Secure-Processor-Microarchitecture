@@ -1,0 +1,5 @@
+CC=gcc
+TARGET=TEST_CLEFIA
+
+all:
+	$(CC) TEST_CLEFIA.c CLEFIA.c -o $(TARGET)
