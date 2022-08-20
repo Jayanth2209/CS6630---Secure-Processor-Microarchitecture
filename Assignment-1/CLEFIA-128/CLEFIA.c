@@ -1,3 +1,5 @@
+#include <TTable.h>
+
 void ByteCpy(unsigned char *dst, const unsigned char *src, int bytelen);
 void ByteXor(unsigned char *dst, const unsigned char *a, const unsigned char *b, int bytelen);
 
@@ -30,8 +32,6 @@ void ByteXor(unsigned char *dst, const unsigned char *a, const unsigned char *b,
     *dst++ = *a++ ^ *b++;
   }
 }
-
-
 
 void ClefiaF0Xor(unsigned char *dst, const unsigned char *src, const unsigned char *rk)
 {

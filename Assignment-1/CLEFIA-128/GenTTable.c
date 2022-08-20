@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* S0 (8-bit S-box based on four 4-bit S-boxes) */
@@ -86,18 +87,171 @@ unsigned char ClefiaMul2(unsigned char x)
 #define ClefiaMul8(_x) (ClefiaMul2(ClefiaMul4((_x))))
 #define ClefiaMulA(_x) (ClefiaMul2((_x)) ^ ClefiaMul8((_x)))
 
-unsigned char * GenTTable(int n)
+unsigned char **GenTTable(int n)
 {
-    unsigned char * TTable = (unsigned char *)malloc(256 * sizeof(unsigned char));
+    unsigned char **TTable = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
 
     if (n == 0)
     {
         for (int i = 0; i < 256; i++){
-            ch
-            TTable[i] = strncat(CLEFIA_S0[i], ClefiaMul2(CLEFIA_S0[i]),);
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", CLEFIA_S0[i], ClefiaMul2(CLEFIA_S0[i]), ClefiaMul4(CLEFIA_S0[i]), ClefiaMul6(CLEFIA_S0[i]));
+        }
     }
+    else if (n == 1) 
+    {
+        for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", ClefiaMul2(CLEFIA_S1[i]), CLEFIA_S1[i], ClefiaMul6(CLEFIA_S1[i]), ClefiaMul4(CLEFIA_S1[i]));
+        } 
+    }
+    else if (n == 2)
+    {
+        for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", ClefiaMul4(CLEFIA_S0[i]), ClefiaMul6(CLEFIA_S0[i]), CLEFIA_S0[i], ClefiaMul2(CLEFIA_S0[i]));
+        } 
+    }
+    else if (n == 3)
+    {
+        for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", ClefiaMul6(CLEFIA_S1[i]), ClefiaMul4(CLEFIA_S1[i]), ClefiaMul2(CLEFIA_S1[i]), CLEFIA_S1[i]);
+        } 
+    }
+    else if (n == 4)
+    {
+        for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", CLEFIA_S1[i], ClefiaMul8(CLEFIA_S1[i]), ClefiaMul2(CLEFIA_S1[i]), ClefiaMulA(CLEFIA_S1[i]));
+        }
+    }
+    else if (n == 5)
+    {
+        for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", ClefiaMul8(CLEFIA_S0[i]), CLEFIA_S0[i], ClefiaMulA(CLEFIA_S0[i]), ClefiaMul2(CLEFIA_S0[i]));
+        }
+    }
+    else if (n == 6)
+    {
+       for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", ClefiaMul2(CLEFIA_S1[i]), ClefiaMulA(CLEFIA_S1[i]), CLEFIA_S1[i], ClefiaMul8(CLEFIA_S1[i]));
+        } 
+    }
+    else if (n == 7)
+    {
+        for (int i = 0; i < 256; i++){
+            TTable[i] = (unsigned char *)malloc(sizeof(unsigned char) * 256);
+            sprintf(TTable[i], "0x%02x%02x%02x%02xU", ClefiaMulA(CLEFIA_S0[i]), ClefiaMul2(CLEFIA_S0[i]), ClefiaMul8(CLEFIA_S0[i]), CLEFIA_S0[i]);
+        }
+    }
+    else 
+    {
+        printf("Error: Index is out of T-Table Range!\n");
+        exit(1);
     }
     
     return TTable;
+    free(TTable);
+}
+
+
+int main()
+{   
+    unsigned char **TTB0 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB1 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB2 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB3 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB4 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB5 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB6 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+    unsigned char **TTB7 = (unsigned char **)malloc(sizeof(unsigned char *) * 256);
+
+    TTB0 = GenTTable(0);
+    TTB1 = GenTTable(1);
+    TTB2 = GenTTable(2);
+    TTB3 = GenTTable(3);
+    TTB4 = GenTTable(4);
+    TTB5 = GenTTable(5);
+    TTB6 = GenTTable(6);
+    TTB7 = GenTTable(7);
+
+    FILE *fp;
+    fp = fopen("TTable.h", "w");
+    
+    fprintf(fp, "\n");
+
+    fprintf(fp, "const unsigned char TTB00[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB0[i]);
+    }
+    fprintf(fp, "%s", TTB0[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB01[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB1[i]);
+    }
+    fprintf(fp, "%s", TTB1[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB02[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB2[i]);
+    }
+    fprintf(fp, "%s", TTB2[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB03[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB3[i]);
+    }
+    fprintf(fp, "%s", TTB3[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB10[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB4[i]);
+    }
+    fprintf(fp, "%s", TTB4[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB11[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB5[i]);
+    }
+    fprintf(fp, "%s", TTB5[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB12[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB6[i]);
+    }
+    fprintf(fp, "%s", TTB6[255]);
+    fprintf(fp, "};\n");
+    fprintf(fp, "const unsigned char TTB13[256] = {");
+    for (int i = 0; i < 255; i++)
+    {
+        fprintf(fp, "%s, ", TTB7[i]);
+    }
+    fprintf(fp, "%s", TTB7[255]);
+    fprintf(fp, "};\n");
+
+    fclose(fp);
+
+    free(TTB0);
+    free(TTB1);
+    free(TTB2);
+    free(TTB3);
+    free(TTB4);
+    free(TTB5);
+    free(TTB6);
+    free(TTB7);
+
+    return 0;
+
 }
 
