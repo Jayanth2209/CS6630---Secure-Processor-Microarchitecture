@@ -50,8 +50,8 @@ for i in range(prime):
     for C in ALL_CHARS:
         PWD[HASH_IDXS[i]] = C
         PWDINP = "".join(PWD)+"\n"	
-        C = subprocess.Popen(["nc","10.21.235.179","5555"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        stdout, stderr = C.communicate(input = PWDINP.encode())
+        C = subprocess.Popen(["python3","Password_Checker_Dummy.py"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        stdout, stderr = C.communicate(input=PWDINP.encode())
         RESPONSE = stdout.decode()
         TIMES.append(float(((RESPONSE.split("\n")[2]).split("=")[1]).strip()))
         if (i==18 and (RESPONSE.split("\n")[1].strip()) == "Access Granted"):
@@ -59,6 +59,26 @@ for i in range(prime):
     if (i!=18):
         TRYPWD[HASH_IDXS[i]] = ALL_CHARS[TIMES.index(max(TIMES))]
     print(TRYPWD)
+
+
+"""for i in range(prime):
+    TIMES = []
+    PWD = TRYPWD.copy()
+    for C in ALL_CHARS:
+        PWD[HASH_IDXS[i]] = C
+        PWDINP = "".join(PWD) + "\n"
+        C = subprocess.Popen(["nc","10.21.235.179","5555"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        stdout, stderr = C.communicate(input = PWDINP.encode())
+        RESPONSE = stdout.decode()
+        print(RESPONSE)
+        TIMES.append(((RESPONSE.split("\n")[2]).split("=")[1]).strip())
+        if (i==18 and (RESPONSE.split("\n")[1].strip()) == "Access Granted"):
+            break;
+    if (i != 18):
+        MAX_TIME = max(TIMES)
+        MAX_TIME_IDX = TIMES.index(MAX_TIME)
+        TRYPWD[HASH_IDXS[i]] = ALL_CHARS[MAX_TIME_IDX]
+    print(TRYPWD)"""
 
 print("The Password is: ", "".join(TRYPWD))
         
