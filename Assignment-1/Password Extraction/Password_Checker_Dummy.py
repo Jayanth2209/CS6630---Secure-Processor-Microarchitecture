@@ -52,7 +52,7 @@ def compute_hash(password):
 def password_checker(password):
     hash = compute_hash(password)
     for i in range(len(flag)):
-        time.sleep(0.001)
+        time.sleep(1)
         if(flag_hash[i]!=hash[i]):
             return False
     return True

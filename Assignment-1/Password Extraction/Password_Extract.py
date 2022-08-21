@@ -33,16 +33,16 @@ ALL_CHARS = ['a', 'A',
              '(', ')', '-', '_', '=', '+', '{', '}', '[', ']', '|', 
              '/', '\\', ':', ';', '"', '\'', '<', '>', ',', '.', '?']
 
-print(len(ALL_CHARS))
+#print(len(ALL_CHARS))
 
 HASH_IDXS = []
 for i in range(prime):
     HASH_IDXS.append((7*i+4)%prime)
-print(HASH_IDXS)
+#print(HASH_IDXS)
 
 TRYPWD = []
 TRYPWD.extend(["=" for i in range(prime)])
-print(TRYPWD)
+#print(TRYPWD)
 
 for i in range(prime):
     TIMES = []
