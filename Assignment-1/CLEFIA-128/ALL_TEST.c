@@ -1,6 +1,13 @@
 #include<stdio.h>
 #include "CLEFIA.h"
 
+void BytePut(const unsigned char *data, int bytelen)
+{
+  while(bytelen-- > 0){
+    printf("%02x", *data++);
+  }
+  printf("\n");
+}
 
 int main(void)
 {
@@ -60,11 +67,15 @@ int main(void)
   ClefiaKeySet128(rk, skey);
   for(int i=0;i<20;i++)
   {
-    ClefiaEncrypt(skey, plaintext[i], ct);
+    //printf("Plain Text: "); BytePut(plaintext[i], 16);
+    ClefiaEncrypt(rk, plaintext[i], ct);
+    //printf("Cipher Text Obtained: "); BytePut(ct, 16);
+    //printf("Cipher Text Expected: "); BytePut(ciphertext[i], 16);
     for(int j=0;j<16;j++)
     {
       if(ct[j]!=ciphertext[i][j])
-        printf("%d, %d\n",ciphertext[i][j],ct[j]);
+        //printf("%d, %d\n",ciphertext[i][j],ct[j]);
+        printf("Error in %dth round\n",i); break;
     }
   }
   printf("All passed\n");

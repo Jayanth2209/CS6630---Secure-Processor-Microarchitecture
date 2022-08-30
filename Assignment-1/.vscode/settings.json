@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "clefia.h": "c"
+        "clefia.h": "c",
+        "stdio.h": "c"
     }
 }
